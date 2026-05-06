@@ -27,7 +27,7 @@ const DIR_FOGON   = 'https://www.google.com/maps/dir/?api=1&destination=20.39935
 const STEPS = [
   { id: 'step-fogon',    label: 'Fogón',    time: '8:30am', Icon: Coffee,   optional: true  },
   { id: 'step-hacienda', label: 'Hacienda', time: '10:00am', Icon: MapPin,   optional: false },
-  { id: 'step-plaza',    label: 'Plaza',    time: '~11am',   Icon: Landmark, optional: false },
+  { id: 'step-plaza',    label: 'Plaza',    time: '12:00pm', Icon: Landmark, optional: false },
   { id: 'step-comida',   label: 'Comida',   time: '1:00pm',  Icon: Utensils, optional: false },
   { id: 'step-goza',     label: 'Gozadera', time: '¡Ya!',    Icon: Music,    optional: false },
 ];
@@ -159,9 +159,10 @@ const TimelineStep = ({ id, time, Icon, title, body, isLast = false, delay = 0, 
       <Icon className="w-5 h-5 text-white" aria-hidden="true" />
     </div>
     <div className="pb-10 flex-1 min-w-0">
-      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full mb-2"
-        style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}>
-        <p className="font-elegant text-gold font-bold tracking-[0.18em] uppercase" style={{ fontSize: '0.85rem' }}>{time}</p>
+      <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-3"
+        style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.22), rgba(201,168,76,0.12))', border: '1.5px solid rgba(201,168,76,0.65)', boxShadow: '0 2px 10px rgba(201,168,76,0.18)' }}>
+        <span style={{ fontSize: '0.8rem' }}>🕐</span>
+        <p className="font-elegant text-gold font-extrabold tracking-[0.2em] uppercase" style={{ fontSize: '1rem' }}>{time}</p>
       </div>
       <h3 className="font-script text-mauve mb-1" style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)' }}>{title}</h3>
       <p className="font-elegant text-mist text-[1.1rem] leading-relaxed">{body}</p>
@@ -320,10 +321,10 @@ const BottomTimeline = () => {
                 <span
                   className="font-elegant leading-none w-full text-center truncate px-0.5"
                   style={{
-                    fontSize: '0.5rem',
-                    letterSpacing: '0.04em',
-                    color: isActive ? '#c9a84c' : isPast ? 'rgba(201,168,76,0.7)' : 'rgba(201,168,76,0.6)',
-                    fontWeight: isActive ? 700 : 500,
+                    fontSize: '0.58rem',
+                    letterSpacing: '0.03em',
+                    color: isActive ? '#b8892a' : isPast ? 'rgba(201,168,76,0.85)' : 'rgba(201,168,76,0.75)',
+                    fontWeight: isActive ? 800 : 600,
                     transition: 'color 0.3s ease',
                   }}
                 >
@@ -455,9 +456,10 @@ export default function App() {
                 <Coffee className="w-5 h-5 text-white" aria-hidden="true" />
               </div>
               <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full mb-1.5"
-                  style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}>
-                  <p className="font-elegant text-gold font-bold tracking-[0.18em] uppercase" style={{ fontSize: '0.85rem' }}>8:30 AM</p>
+                <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full mb-2"
+                  style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.22), rgba(201,168,76,0.12))', border: '1.5px solid rgba(201,168,76,0.65)', boxShadow: '0 2px 10px rgba(201,168,76,0.18)' }}>
+                  <span style={{ fontSize: '0.8rem' }}>🕐</span>
+                  <p className="font-elegant text-gold font-extrabold tracking-[0.2em] uppercase" style={{ fontSize: '1rem' }}>8:30 AM</p>
                 </div>
                 <h3 className="font-script text-mauve" style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)' }}>El Fogón del Rancho</h3>
               </div>
@@ -484,7 +486,7 @@ export default function App() {
             <ComoLlegarBtn href={DIR_SAUCEDA} />
           </TimelineStep>
 
-          <TimelineStep id="step-plaza" time="~11:00 AM" Icon={Landmark}
+          <TimelineStep id="step-plaza" time="12:00 PM" Icon={Landmark}
             title="Plaza de Cocula"
             body="Paseo por el centro histórico de Cocula. Fotos, antojitos y disfrutar el ambiente del pueblo."
             delay={0.2}>
