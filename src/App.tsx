@@ -205,7 +205,7 @@ export default function App() {
         >
           <div className="h-px w-10 bg-gold" />
           <p className="font-elegant text-gold font-medium tracking-[0.2em] uppercase text-sm">
-            Domingo 10 de Mayo, 2026
+            Sábado 9 de Mayo, 2026
           </p>
           <div className="h-px w-10 bg-gold" />
         </motion.div>
@@ -399,7 +399,7 @@ export default function App() {
           Con todo nuestro amor
         </p>
         <p className="font-elegant text-mist text-xl mt-1">La Familia Ramos</p>
-        <p className="font-elegant text-mist/50 text-sm mt-5">10 de Mayo, 2026 · Cocula, Jalisco</p>
+        <p className="font-elegant text-mist/50 text-sm mt-5">9 de Mayo, 2026 · Cocula, Jalisco</p>
       </footer>
     </div>
   );
