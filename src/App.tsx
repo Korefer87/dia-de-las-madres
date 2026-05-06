@@ -25,11 +25,11 @@ const DIR_FOGON   = 'https://www.google.com/maps/dir/?api=1&destination=20.39935
 
 /* ─── Itinerary steps (shared between timeline + bottom bar) ─── */
 const STEPS = [
-  { id: 'step-fogon',    label: 'Fogón',    Icon: Coffee,   optional: true  },
-  { id: 'step-hacienda', label: 'Hacienda', Icon: MapPin,   optional: false },
-  { id: 'step-plaza',    label: 'Plaza',    Icon: Landmark, optional: false },
-  { id: 'step-comida',   label: 'Comida',   Icon: Utensils, optional: false },
-  { id: 'step-goza',     label: 'Gozadera', Icon: Music,    optional: false },
+  { id: 'step-fogon',    label: 'Fogón',    time: '8:30am', Icon: Coffee,   optional: true  },
+  { id: 'step-hacienda', label: 'Hacienda', time: '10:00am', Icon: MapPin,   optional: false },
+  { id: 'step-plaza',    label: 'Plaza',    time: '~11am',   Icon: Landmark, optional: false },
+  { id: 'step-comida',   label: 'Comida',   time: '1:00pm',  Icon: Utensils, optional: false },
+  { id: 'step-goza',     label: 'Gozadera', time: '¡Ya!',    Icon: Music,    optional: false },
 ];
 
 /* ─── SVG: Rose ─── */
@@ -159,7 +159,10 @@ const TimelineStep = ({ id, time, Icon, title, body, isLast = false, delay = 0, 
       <Icon className="w-5 h-5 text-white" aria-hidden="true" />
     </div>
     <div className="pb-10 flex-1 min-w-0">
-      <p className="font-elegant text-gold font-semibold text-sm tracking-[0.22em] uppercase mb-1">{time}</p>
+      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full mb-2"
+        style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}>
+        <p className="font-elegant text-gold font-bold tracking-[0.18em] uppercase" style={{ fontSize: '0.85rem' }}>{time}</p>
+      </div>
       <h3 className="font-script text-mauve mb-1" style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)' }}>{title}</h3>
       <p className="font-elegant text-mist text-[1.1rem] leading-relaxed">{body}</p>
       {children}
@@ -313,14 +316,19 @@ const BottomTimeline = () => {
                   {step.label}
                 </span>
 
-                {step.optional && (
-                  <span
-                    className="font-elegant leading-none"
-                    style={{ fontSize: '0.48rem', color: '#c9a84c', letterSpacing: '0.06em' }}
-                  >
-                    OPCIONAL
-                  </span>
-                )}
+                {/* Time */}
+                <span
+                  className="font-elegant leading-none w-full text-center truncate px-0.5"
+                  style={{
+                    fontSize: '0.5rem',
+                    letterSpacing: '0.04em',
+                    color: isActive ? '#c9a84c' : isPast ? 'rgba(201,168,76,0.7)' : 'rgba(201,168,76,0.6)',
+                    fontWeight: isActive ? 700 : 500,
+                    transition: 'color 0.3s ease',
+                  }}
+                >
+                  {step.time}
+                </span>
               </button>
             );
           })}
@@ -447,7 +455,10 @@ export default function App() {
                 <Coffee className="w-5 h-5 text-white" aria-hidden="true" />
               </div>
               <div>
-                <p className="font-elegant text-gold font-semibold text-sm tracking-[0.22em] uppercase mb-0.5">9:00 AM</p>
+                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full mb-1.5"
+                  style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}>
+                  <p className="font-elegant text-gold font-bold tracking-[0.18em] uppercase" style={{ fontSize: '0.85rem' }}>8:30 AM</p>
+                </div>
                 <h3 className="font-script text-mauve" style={{ fontSize: 'clamp(1.6rem, 5vw, 2.2rem)' }}>El Fogón del Rancho</h3>
               </div>
             </div>
@@ -473,7 +484,7 @@ export default function App() {
             <ComoLlegarBtn href={DIR_SAUCEDA} />
           </TimelineStep>
 
-          <TimelineStep id="step-plaza" time="A Continuación" Icon={Landmark}
+          <TimelineStep id="step-plaza" time="~11:00 AM" Icon={Landmark}
             title="Plaza de Cocula"
             body="Paseo por el centro histórico de Cocula. Fotos, antojitos y disfrutar el ambiente del pueblo."
             delay={0.2}>
@@ -490,13 +501,13 @@ export default function App() {
             />
           </TimelineStep>
 
-          <TimelineStep id="step-comida" time="Por la Tarde" Icon={Utensils}
+          <TimelineStep id="step-comida" time="1:00 PM · Salida" Icon={Utensils}
             title="Santa Cruz de las Flores"
-            body="De regreso a casa de la familia Ramos. Comida abundante, risas y mucho amor familiar."
+            body="A la 1 PM salimos hacia Santa Cruz de las Flores. Comida abundante en casa de la familia Ramos — risas, música y mucho amor."
             delay={0.3}
           />
 
-          <TimelineStep id="step-goza" time="Después de Comer" Icon={Music}
+          <TimelineStep id="step-goza" time="¡A Gozar!" Icon={Music}
             title="¡La Gozadera!"
             body="La fiesta continúa en casa. Música, convivencia y el mejor cierre para el día más especial del año."
             isLast delay={0.4}
@@ -512,7 +523,7 @@ export default function App() {
           <Car className="w-8 h-8 text-gold flex-shrink-0 mt-0.5" aria-hidden="true" />
           <p className="font-elegant text-mauve text-[1.1rem] leading-relaxed">
             <span className="font-semibold">Transporte:</span> Cada quien en su propio auto.
-            Punto de encuentro en <span className="text-blossom font-semibold">Hacienda La Sauceda a las 10:00 AM</span> — ¡no lleguen tarde!
+            Nos reunimos en <span className="text-blossom font-semibold">Hacienda La Sauceda a las 10:00 AM</span> y salimos hacia <span className="text-blossom font-semibold">Santa Cruz a la 1:00 PM</span> — ¡no lleguen tarde!
           </p>
         </div>
       </motion.section>
