@@ -28,7 +28,7 @@ const STEPS = [
   { id: 'step-fogon',    label: 'Fogón',    time: '8:30am', Icon: Coffee,   optional: true  },
   { id: 'step-hacienda', label: 'Hacienda', time: '10:00am', Icon: MapPin,   optional: false },
   { id: 'step-plaza',    label: 'Plaza',    time: '12:00pm', Icon: Landmark, optional: false },
-  { id: 'step-comida',   label: 'Comida',   time: '1:00pm',  Icon: Utensils, optional: false },
+  { id: 'step-comida',   label: 'Comida',   time: '2:00pm',  Icon: Utensils, optional: false },
   { id: 'step-goza',     label: 'Gozadera', time: '¡Ya!',    Icon: Music,    optional: false },
 ];
 
@@ -503,7 +503,7 @@ export default function App() {
             />
           </TimelineStep>
 
-          <TimelineStep id="step-comida" time="1:00 PM · Salida" Icon={Utensils}
+          <TimelineStep id="step-comida" time="2:00 PM · Comida" Icon={Utensils}
             title="Santa Cruz de las Flores"
             body="A la 1 PM salimos hacia Santa Cruz de las Flores. Comida abundante en casa de la familia Ramos — risas, música y mucho amor."
             delay={0.3}
