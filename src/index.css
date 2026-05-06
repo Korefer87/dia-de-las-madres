@@ -1,12 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Great Vibes", cursive;
+  --font-elegant: "Cormorant Infant", serif;
+  --font-sans: "Cormorant Infant", serif;
+
+  --color-petal: #f9a8c9;
+  --color-blossom: #d4638c;
+  --color-bloom: #9d2455;
+  --color-gold: #c9a84c;
+  --color-gold-light: #f0dfa0;
+  --color-cream: #fff9f5;
+  --color-mauve: #4a1942;
+  --color-mist: #7b4d6e;
+}
+
+@keyframes petal-fall {
+  0%   { transform: translate(0,   -60px) rotate(0deg);   opacity: 0.85; }
+  20%  { transform: translate(28px,  20vh) rotate(144deg); }
+  40%  { transform: translate(-18px, 40vh) rotate(288deg); }
+  60%  { transform: translate(22px,  60vh) rotate(432deg); }
+  80%  { transform: translate(-12px, 80vh) rotate(576deg); opacity: 0.3;  }
+  100% { transform: translate(6px,  110vh) rotate(720deg); opacity: 0;    }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px)   rotate(0deg); }
+  50%       { transform: translateY(-10px) rotate(4deg); }
+}
+
+@keyframes gold-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%       { opacity: 1;   }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1);    }
+  14%       { transform: scale(1.15); }
+  28%       { transform: scale(1);    }
+  42%       { transform: scale(1.1);  }
+  70%       { transform: scale(1);    }
+}
+
+.animate-petal-fall  { animation: petal-fall  linear     infinite; }
+.animate-float       { animation: float-gentle ease-in-out infinite; }
+.animate-gold-pulse  { animation: gold-pulse  ease-in-out infinite 2s; }
+.animate-heartbeat   { animation: heartbeat   ease-in-out infinite 1.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-petal-fall,
+  .animate-float,
+  .animate-gold-pulse,
+  .animate-heartbeat { animation: none; }
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: #f9fafb;
-  color: #111827;
+  min-height: 100dvh;
 }
