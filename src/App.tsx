@@ -5,18 +5,24 @@ import {
   Coffee, Music, Navigation, Sparkles,
 } from 'lucide-react';
 
-/* ─── Constants ─── */
+/* ─── Unsplash photo IDs ─── */
+const PHOTO = {
+  roses:       'photo-1519904981063-b0cf448d479e',
+  food:        'photo-1533900298318-6b8da08a523e',
+  plaza:       'photo-1511920170033-f8396924c348',
+  celebration: 'photo-1559827260-dc66d52bef19',
+  hacienda:    'photo-1504384308090-c894fdcc538d',
+};
+const unsplash = (id: string, w = 1200, q = 80) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=${q}`;
+
+/* ─── Map embed URLs ─── */
 const MAP_SAUCEDA =
   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34234.59619899517!2d-103.82107420633227!3d20.45278514795249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8425e37c7e5a9331%3A0xde9e9253454161fc!2sHACIENDA%20LA%20SAUCEDA!5e0!3m2!1ses!2smx!4v1778037147765!5m2!1ses!2smx';
-
 const MAP_FOGON =
   'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34484.687817640886!2d-103.82258553564796!3d20.399357350552485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8425e50053def335%3A0xc0a31d8e333a4d3b!2sEl%20Fog%C3%B3n%20del%20Rancho!5e0!3m2!1ses!2smx!4v1778037700697!5m2!1ses!2smx';
-
-const DIR_SAUCEDA =
-  'https://www.google.com/maps/dir/?api=1&destination=20.45278514795249,-103.82107420633227';
-
-const DIR_FOGON =
-  'https://www.google.com/maps/dir/?api=1&destination=20.399357350552485,-103.82258553564796';
+const DIR_SAUCEDA = 'https://www.google.com/maps/dir/?api=1&destination=20.45278514795249,-103.82107420633227';
+const DIR_FOGON   = 'https://www.google.com/maps/dir/?api=1&destination=20.399357350552485,-103.82258553564796';
 
 /* ─── SVG: Rose decoration ─── */
 const RoseSVG = ({ className, style }: { className?: string; style?: React.CSSProperties }) => (
@@ -88,7 +94,24 @@ const ComoLlegarBtn = ({ href }: { href: string }) => (
   </motion.a>
 );
 
-/* ─── Floating petals background ─── */
+/* ─── Full-width image divider between sections ─── */
+const ImageDivider = ({ src, alt, height = 220 }: { src: string; alt?: string; height?: number }) => (
+  <div className="relative z-10 w-full overflow-hidden" style={{ height }}>
+    <img
+      src={src}
+      alt={alt ?? ''}
+      aria-hidden={!alt}
+      className="absolute inset-0 w-full h-full object-cover"
+      loading="lazy"
+    />
+    <div
+      className="absolute inset-0"
+      style={{ background: 'linear-gradient(to bottom, rgba(255,249,245,1) 0%, transparent 25%, transparent 75%, rgba(253,244,232,1) 100%)' }}
+    />
+  </div>
+);
+
+/* ─── Floating petals ─── */
 const PETAL_COLORS = ['#f9a8c9','#f48fb1','#fce4ec','#ffd6e7','#ffb3d1','#fce8f5'];
 const FloatingPetals = () => {
   const [petals] = useState(() =>
@@ -166,7 +189,23 @@ export default function App() {
       <FloatingPetals />
 
       {/* ── HERO ────────────────────────────────── */}
-      <section className="relative min-h-dvh flex flex-col items-center justify-center text-center px-6 py-24 z-10">
+      <section className="relative min-h-dvh flex flex-col items-center justify-center text-center px-6 py-24 z-10 overflow-hidden">
+        {/* Background photo */}
+        <div className="absolute inset-0">
+          <img
+            src={unsplash(PHOTO.roses, 1920)}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+            style={{ opacity: 0.22 }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(150deg, rgba(255,249,245,0.9) 0%, rgba(252,228,236,0.85) 45%, rgba(253,244,232,0.9) 100%)' }}
+          />
+        </div>
+
+        {/* Corner roses */}
         <RoseSVG className="absolute top-2 left-2 w-28 h-28 opacity-55 animate-float" style={{ animationDuration: '5s' }} />
         <RoseSVG className="absolute top-2 right-2 w-28 h-28 opacity-55 animate-float [transform:scaleX(-1)]" style={{ animationDuration: '6s', animationDelay: '1s' }} />
         <RoseSVG className="absolute bottom-2 left-2 w-20 h-20 opacity-35 animate-float" style={{ animationDuration: '7s', animationDelay: '2s' }} />
@@ -255,6 +294,9 @@ export default function App() {
         </motion.div>
       </section>
 
+      {/* ── IMAGEN FLORAL DIVISORA ──────────────── */}
+      <ImageDivider src={unsplash(PHOTO.roses, 1920)} height={200} />
+
       {/* ── PLAN DEL DÍA: título ────────────────── */}
       <section className="relative z-10 px-5 pt-10 pb-2 max-w-2xl mx-auto text-center">
         <motion.div
@@ -276,16 +318,26 @@ export default function App() {
         <motion.div
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.75 }} viewport={{ once: true }}
           className="rounded-3xl overflow-hidden shadow-lg border"
-          style={{
-            background: 'rgba(255,255,255,0.72)',
-            borderColor: 'rgba(201,168,76,0.4)',
-            backdropFilter: 'blur(10px)',
-          }}
+          style={{ borderColor: 'rgba(201,168,76,0.4)' }}
         >
-          {/* Badge header */}
+          {/* Card photo */}
+          <div className="relative h-52 overflow-hidden">
+            <img
+              src={unsplash(PHOTO.food, 900)}
+              alt="Desayuno tradicional El Fogón del Rancho"
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(255,249,245,0.85) 100%)' }}
+            />
+          </div>
+
+          {/* Badge */}
           <div
             className="px-5 py-3 flex items-center justify-center gap-2"
-            style={{ background: 'linear-gradient(90deg, rgba(201,168,76,0.18), rgba(201,168,76,0.28), rgba(201,168,76,0.18))', borderBottom: '1px solid rgba(201,168,76,0.35)' }}
+            style={{ background: 'rgba(255,255,255,0.82)', borderBottom: '1px solid rgba(201,168,76,0.35)' }}
           >
             <Sparkles className="w-4 h-4 text-gold" aria-hidden="true" />
             <span className="font-elegant text-gold font-semibold tracking-[0.25em] uppercase text-sm">
@@ -295,7 +347,7 @@ export default function App() {
           </div>
 
           {/* Content */}
-          <div className="p-6 md:p-8">
+          <div className="p-6 md:p-8" style={{ background: 'rgba(255,255,255,0.72)', backdropFilter: 'blur(10px)' }}>
             <div className="flex items-start gap-4 mb-2">
               <div
                 className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md"
@@ -328,7 +380,7 @@ export default function App() {
       <section className="relative z-10 px-5 pb-6 max-w-2xl mx-auto">
         <div className="pl-1">
 
-          {/* Paso 1: Hacienda La Sauceda */}
+          {/* Hacienda La Sauceda */}
           <TimelineStep
             time="10:00 AM · Punto de Encuentro"
             Icon={MapPin}
@@ -340,16 +392,28 @@ export default function App() {
             <ComoLlegarBtn href={DIR_SAUCEDA} />
           </TimelineStep>
 
-          {/* Paso 2: Plaza de Cocula */}
+          {/* Plaza de Cocula */}
           <TimelineStep
             time="A Continuación"
             Icon={Landmark}
             title="Plaza de Cocula"
             body="Paseo por el centro histórico de Cocula. Fotos, antojitos y disfrutar el ambiente del pueblo."
             delay={0.2}
-          />
+          >
+            <motion.img
+              src={unsplash(PHOTO.plaza, 800)}
+              alt="Plaza de Cocula, Jalisco"
+              className="mt-4 w-full object-cover rounded-2xl shadow-md"
+              style={{ height: '200px' }}
+              loading="lazy"
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            />
+          </TimelineStep>
 
-          {/* Paso 3: Santa Cruz de las Flores - Comida */}
+          {/* Santa Cruz de las Flores */}
           <TimelineStep
             time="Por la Tarde"
             Icon={Utensils}
@@ -358,7 +422,7 @@ export default function App() {
             delay={0.3}
           />
 
-          {/* Paso 4: Gozadera */}
+          {/* Gozadera */}
           <TimelineStep
             time="Después de Comer"
             Icon={Music}
@@ -373,7 +437,7 @@ export default function App() {
       {/* ── NOTA DE TRANSPORTE ──────────────────── */}
       <motion.section
         initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}
-        className="relative z-10 px-5 pb-16 max-w-xl mx-auto"
+        className="relative z-10 px-5 pb-10 max-w-xl mx-auto"
       >
         <div
           className="rounded-2xl px-6 py-5 flex items-start gap-4 border"
@@ -385,6 +449,38 @@ export default function App() {
             Punto de encuentro en{' '}
             <span className="text-blossom font-semibold">Hacienda La Sauceda a las 10:00 AM</span> — ¡no lleguen tarde!
           </p>
+        </div>
+      </motion.section>
+
+      {/* ── BANNER DE CIERRE ────────────────────── */}
+      <motion.section
+        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.9 }} viewport={{ once: true }}
+        className="relative z-10 mx-5 mb-10 rounded-3xl overflow-hidden shadow-2xl max-w-2xl md:mx-auto"
+        style={{ minHeight: '280px' }}
+      >
+        <img
+          src={unsplash(PHOTO.celebration, 1200)}
+          alt="Celebración en familia"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(135deg, rgba(74,25,66,0.72) 0%, rgba(157,36,85,0.65) 100%)' }}
+        />
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-8 py-14">
+          <RoseSVG className="w-16 h-16 mb-4 opacity-90" />
+          <p className="font-script text-white mb-3" style={{ fontSize: 'clamp(2rem, 7vw, 3.2rem)' }}>
+            ¡Las esperamos con los brazos abiertos!
+          </p>
+          <p className="font-elegant text-pink-100 text-lg leading-relaxed max-w-md">
+            Porque los mejores momentos de la vida son los que compartimos en familia.
+          </p>
+          <div className="flex items-center gap-2 mt-6">
+            <Heart className="w-4 h-4 text-pink-200 fill-pink-200" />
+            <Heart className="w-6 h-6 text-white fill-white animate-heartbeat" />
+            <Heart className="w-4 h-4 text-pink-200 fill-pink-200" />
+          </div>
         </div>
       </motion.section>
 
